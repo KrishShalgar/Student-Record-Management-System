@@ -10,5 +10,6 @@ struct add {
 
 int add(struct add **head);
 int stud_add(struct add **head);
-
+int save_students(struct add *head);
+void show_data();
 #endif

@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<ctype.h>
 #include"student.h"
 int main(){
     struct add *head = NULL;
@@ -33,10 +34,23 @@ int main(){
             return 0;
         }
         continue;
-        }else{
+        }else{ // this handles if user enters A plus eof
             command[len] = '\0';
-            return 0;
         }
+
+        //to remove the first white space
+        int read_position = 0;
+        int write_position = 0;
+        while(command[read_position] != '\0'){
+            if(!isspace((unsigned char)command[read_position])){
+                command[write_position] = command[read_position];
+                write_position++;
+            }
+            read_position++;
+        }
+        command[write_position] = '\0';
+
+        // COMMAND PROCESSING
         if(strcmp(command,"A")==0 || strcmp(command,"a")==0){
             int val = add(&head);
             if(val){
@@ -47,11 +61,16 @@ int main(){
         }else if(strcmp(command,"D")==0 || strcmp(command,"d")== 0){
 
         }else if(strcmp(command,"S")==0 || strcmp(command,"s")== 0){
-
+            show_data();
         }else if(strcmp(command,"M")==0 || strcmp(command,"m")== 0){
 
         }else if(strcmp(command,"V")==0 || strcmp(command,"v")== 0){
-
+            int result = save_students(head);
+            if(result){
+                printf("save failed\n");
+            }else{
+                printf("saved succesfully\n");
+            }
         }else if(strcmp(command,"E")==0 || strcmp(command,"e")== 0){
             return 0;
         }else if(strcmp(command,"T")==0 || strcmp(command,"t")== 0){
